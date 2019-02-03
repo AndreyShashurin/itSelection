@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
 		},
 		key: '2ee1edbf-d90f-4785-b9db-5b07ce70a928',
 		type: 'service'	
-	};
+	};s
 
 	constructor(
 		private messageService: MessageService
@@ -48,11 +48,23 @@ export class AppComponent implements OnInit {
       		if(data.key == this.message.key && data['status'] == '200'){
       			this.messageService.hotels.next(this.hotel);
 				this.messageService.hotels.subscribe(msg => {	
-				    console.log("отели",msg.data.search);		
+				if(msg.data.done != true){
+  					this.done(msg.data.total);
+				}else{	
 					this.hotelResponce = msg.data.search;
+				}
 				});
       		}
         });	
+	}
+
+	done(total){
+		this.hotel.data.num = total;
+		console.log(this.hotel);
+      	this.messageService.hotels.next(this.hotel);
+		this.messageService.hotels.subscribe(msg => {	
+			this.hotelResponce = msg.data.search;
+		});	
 	}
 
 	getStars(rating){
