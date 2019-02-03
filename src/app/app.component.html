@@ -1,0 +1,14 @@
+<button (click)="sendMsg()">Получить список отелей</button>
+<div *ngFor="let Responce of hotelResponce ;trackBy: trackId" class="flexBox">
+  <div class="picture"><img src="{{Responce.info?.img}}"></div>
+  <div class="content">
+    <h4>{{Responce.info?.name}}</h4>
+    <div class="stars"><span [ngStyle]="{ 'width': getStars(Responce?.info.cat) }"></span></div>
+    <div class="addr">Расположение <br>{{Responce.info?.addr}}</div>
+    </div>
+  <div class="item">
+    <div class="sale" *ngIf="Responce.items[0][0].commerce.payment != 0">{{Responce.items[0][0].commerce.payment}} {{Responce.items[0][0].commerce.reservationfeecurrency}}</div>
+    <div class="tpayment">{{Responce.items[0][0].commerce.tpayment}} {{Responce.items[0][0].commerce.reservationfeecurrency}}</div>
+    <button>Подробнее</button>
+  </div>
+</div>
