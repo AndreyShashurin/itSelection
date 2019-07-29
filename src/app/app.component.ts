@@ -10,7 +10,8 @@ import { MessageService } from './message.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
- 	title = 'itSelection';
+	 title = 'WebSocket';
+	 NotFound = false;
     private hotelResponce = [];
 	private message = {
 		action: 'login',
@@ -48,11 +49,13 @@ export class AppComponent implements OnInit {
       		if(data.key == this.message.key && data['status'] == '200'){
       			this.messageService.hotels.next(this.hotel);
 				this.messageService.hotels.subscribe(msg => {	
-				if(msg.data.done != true){
-  					this.done(msg.data.total);
-				}else{	
-					this.hotelResponce = msg.data.search;
-				}
+					if(msg.data.done != true){
+						this.done(msg.data.total);
+					} else if(msg.data.found === 0){
+						this.NotFound = true;
+					} else{	
+						this.hotelResponce = msg.data.search;
+					}
 				});
       		}
         });	
@@ -60,7 +63,6 @@ export class AppComponent implements OnInit {
 
 	done(total){
 		this.hotel.data.num = total;
-		console.log(this.hotel);
       	this.messageService.hotels.next(this.hotel);
 		this.messageService.hotels.subscribe(msg => {	
 			this.hotelResponce = msg.data.search;

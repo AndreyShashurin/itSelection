@@ -10,7 +10,13 @@ body {
     width: 650px;
     margin: 0 auto;
     border-top-width: 8px !important;
-    border: solid 1px #1f143c;
+	border: solid 1px #1f143c;
+	&_NotFound {
+		display: block;
+		text-align: center;
+		width: 650px;
+		margin: 0 auto;
+	}
     .picture{
     	img{
 			width: 100%;
